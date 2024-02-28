@@ -3,14 +3,24 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 import java.util.List;
+import atu.testrecorder.ATUTestRecorder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 
 public class TestFirst {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		 DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH-mm-ss");
+		  Date date = new Date();
+		  //Created object of ATUTestRecorder
+		  //Provide path to store videos and file name format.
+		  ATUTestRecorder recorder = new ATUTestRecorder("D:\\ScriptVideos\\","TestVideo-"+dateFormat.format(date),false);
+		  //To start video recording.
+		  recorder.start(); 
+		
         // Set the path to the ChromeDriver executable
         System.setProperty("webdriver.chrome.driver", "D:\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
 
@@ -25,8 +35,7 @@ public class TestFirst {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        
+        }        
         
         // Find the Table Data button and click it
         WebElement tableDataButton = driver.findElement(By.xpath ("//*[contains(text(),'Table Data')]"));
@@ -37,7 +46,7 @@ public class TestFirst {
         String jsonData = "[{\"name\" : \"Bob\", \"age\" : 20, \"gender\": \"male\"}, {\"name\": \"George\", \"age\" : 42, \"gender\": \"male\"}, {\"name\": \"Sara\", \"age\" : 42, \"gender\": \"female\"}, {\"name\": \"Conor\", \"age\" : 40, \"gender\": \"male\"}, {\"name\": \"Jennifer\", \"age\" : 42, \"gender\": \"female\"}]";
         js.executeScript("document.getElementById('jsondata').value='" + jsonData + "'");
         
-     // Wait for 2 seconds
+        // Wait for 2 seconds
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -97,11 +106,15 @@ public class TestFirst {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        
+        }        
         
         // Close the browser
         driver.close();
+        
+        
+      //To stop video recording.
+        recorder.stop();
+        
     }
 
 
